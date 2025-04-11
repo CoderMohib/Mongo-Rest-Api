@@ -1,20 +1,13 @@
-// db.js
-const { MongoClient } = require("mongodb");
+const mongoose = require("mongoose");
 
-const url = "mongodb://127.0.0.1:27017";
-const client = new MongoClient(url);
-const dbName = "Inventory";
-
-async function connectDB() {
+const connectDB = async () => {
   try {
-    await client.connect();
-    console.log("Connected to MongoDB");
-    const db = client.db(dbName); 
-    return db;
-  } catch (error) {
-    console.error("MongoDB connection error:", error);
-    throw new Error("Failed to connect to MongoDB");
+    await mongoose.connect("mongodb://127.0.0.1:27017/Inventory");
+    console.log("MongoDB connected");
+  } catch (err) {
+    console.error("DB connection error:", err);
+    throw err;
   }
-}
+};
 
 module.exports = connectDB;
