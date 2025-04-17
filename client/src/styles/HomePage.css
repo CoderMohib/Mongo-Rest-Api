@@ -1,0 +1,91 @@
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Arial', sans-serif;
+  }
+
+  body {
+    background-color: #f4f7fc;
+    color: #333;
+    font-size: 16px;
+    line-height: 1.5;
+  }
+  
+  .home-page {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    text-align: center;
+  }
+  
+  .title {
+    font-size: 2.5rem;
+    color: #2c3e50;
+    margin-bottom: 2rem;
+    font-weight: 600;
+  }
+  
+  .button-container {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  .button {
+    padding: 12px 24px;
+    border-radius: 8px;
+    text-decoration: none;
+    color: #fff;
+    font-size: 1rem;
+    text-align: center;
+    width: 150px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s ease, transform 0.2s ease;
+  }
+  
+  .create-button {
+    background-color: #4caf50;
+  }
+  
+  .display-button {
+    background-color: #3498db;
+  }
+  
+  .update-button {
+    background-color: #f39c12;
+  }
+  
+  /* Button Hover Effects */
+  .button:hover {
+    transform: scale(1.05);
+  }
+  
+  .create-button:hover {
+    background-color: #45a049;
+  }
+  
+  .display-button:hover {
+    background-color: #2980b9;
+  }
+  
+  .update-button:hover {
+    background-color: #e67e22;
+  }
+  
+
+  @media (max-width: 768px) {
+    .title {
+      font-size: 2rem;
+    }
+  
+    .button-container {
+      flex-direction: column;
+      gap: 1rem;
+    }
+  }
+  

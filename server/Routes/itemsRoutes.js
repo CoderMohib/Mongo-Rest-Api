@@ -9,6 +9,6 @@ const {
 
 router.post("/items", creatItems);
 router.get("/items", getItem);
-router.put("/items/:item",updateItem);
-router.delete("/items/:item",deleteItem);
+router.put("/items/:id",updateItem);
+router.delete("/items/:id",deleteItem);
 module.exports = router;

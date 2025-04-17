@@ -1,8 +1,9 @@
 const Item = require("../Models/Item");
 
 const creatItems = async (req, res) => {
+  const reBody = req.body;
   try {
-    const newItem = new Item(req.body);
+    const newItem = new Item(reBody);
     await newItem.save();
     res
       .status(200)
@@ -14,18 +15,18 @@ const creatItems = async (req, res) => {
 };
 
 const getItem = async (req, res) => {
+  const { sitem } = req.query;
   try {
-    const { sitem } = req.query;
     if (!sitem) {
-      return res
-        .status(400)
-        .json({ message: "Item name is required in query" });
+      const allItems = await Item.find();
+      res.status(200).json(allItems);
+    } else {
+      const item = await Item.findOne({ name: sitem });
+      console.log(item);
+      return item
+        ? res.status(200).json({ message: "Item", data: item })
+        : res.status(404).json({ message: "Item not found" });
     }
-    const item = await Item.findOne({ name: sitem });
-    if (!item) {
-      return res.status(404).json({ message: "Item not found" });
-    }
-    res.status(200).json({ message: "Item", data: item });
   } catch (err) {
     console.error("Error:", err);
     res
@@ -35,7 +36,7 @@ const getItem = async (req, res) => {
 };
 const updateItem = async (req, res) => {
   try {
-    const filter = { name: req.params.item };
+    const filter = { _id: req.params.id };
     const toUpdate = req.body;
     const result = await Item.updateOne(filter, { $set: toUpdate });
     if (result.matchedCount === 0) {
@@ -53,7 +54,7 @@ const updateItem = async (req, res) => {
 };
 const deleteItem = async (req, res) => {
   try {
-    const result = await Item.deleteOne({ name: req.params.item });
+    const result = await Item.deleteOne({ _id: req.params.id });
 
     if (result.deletedCount === 1) {
       res.status(200).json({ message: "Item deleted successfully" });
@@ -70,5 +71,5 @@ module.exports = {
   getItem,
   creatItems,
   updateItem,
-  deleteItem
+  deleteItem,
 };
