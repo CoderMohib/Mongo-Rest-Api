@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
+import '../styles/DisplayItem.css';
 
 export default function DisplayItems() {
   const [items, setItems] = useState([]);
@@ -29,44 +30,32 @@ export default function DisplayItems() {
   };
 
   const handleOnUpdate = async (id) => {
-    try {
-      await axios.put(`http://localhost:3000/items/${id}`, updateItem);
-      setItems((prevItems) =>
-        prevItems.map((item) =>
-          item._id === id ? { ...item, ...updateItem } : item
-        )
-      );
+    if (Object.keys(updateItem).length > 0) {
+      try {
+        await axios.put(`http://localhost:3000/items/${id}`, updateItem);
+        setItems((prevItems) =>
+          prevItems.map((item) =>
+            item._id === id ? { ...item, ...updateItem } : item
+          )
+        );
+        setEditingItem(null);
+        setUpdateItem({});
+      } catch (err) {
+        console.log("Error updating item:", err);
+      }
+    } else {
       setEditingItem(null);
-      setUpdateItem({});
-    } catch (err) {
-      console.log("Error updating item:", err);
     }
   };
 
   return (
-    <div style={{ padding: "1rem" }}>
+    <div className="container">
       <h2>Item List</h2>
-      <ul style={{ listStyleType: "none", padding: 0 }}>
+      <ul className="item-list">
         {items.map((item) => (
-          <li
-            key={item._id}
-            style={{
-              border: "1px solid #ccc",
-              borderRadius: "8px",
-              padding: "1rem",
-              marginBottom: "1.5rem",
-              background: "#f9f9f9",
-            }}
-          >
+          <li key={item._id} className="item">
             {editingItem === item._id ? (
-              <form
-                style={{
-                  display: "grid",
-                  gridTemplateColumns: "1fr 2fr",
-                  gap: "0.5rem 1rem",
-                  alignItems: "center",
-                }}
-              >
+              <form className="form-container">
                 <label htmlFor="name">Name:</label>
                 <input
                   id="name"
@@ -128,8 +117,7 @@ export default function DisplayItems() {
                   }
                 />
 
-                <div></div>
-                <div>
+                <div className="form-actions">
                   <button
                     onClick={(e) => {
                       e.preventDefault();
@@ -137,28 +125,32 @@ export default function DisplayItems() {
                     }}
                   >
                     Save
-                  </button>{" "}
+                  </button>
                   <button onClick={() => setEditingItem(null)}>Cancel</button>
                 </div>
               </form>
             ) : (
               <>
-                <h3>{item.name}</h3>
-                <p>
-                  <strong>Description:</strong> {item.description}
-                </p>
-                <p>
-                  <strong>Price:</strong> ${item.price}
-                </p>
-                <p>
-                  <strong>Quantity:</strong>{" "}
-                  {item.quantity > 0 ? item.quantity : "Stock Not Available"}
-                </p>
-                <p>
-                  <strong>Category:</strong> {item.category}
-                </p>
-                <button onClick={() => handleOnDelete(item._id)}>Delete</button>{" "}
-                <button onClick={() => setEditingItem(item._id)}>Edit</button>
+                <div className="item-details">
+                  <h3>{item.name}</h3>
+                  <p>
+                    <strong>Description:</strong> {item.description}
+                  </p>
+                  <p>
+                    <strong>Price:</strong> ${item.price}
+                  </p>
+                  <p>
+                    <strong>Quantity:</strong>{" "}
+                    {item.quantity > 0 ? item.quantity : "Stock Not Available"}
+                  </p>
+                  <p>
+                    <strong>Category:</strong> {item.category}
+                  </p>
+                </div>
+                <div className="item-actions">
+                  <button onClick={() => handleOnDelete(item._id)}>Delete</button>{" "}
+                  <button onClick={() => setEditingItem(item._id)}>Edit</button>
+                </div>
               </>
             )}
           </li>
