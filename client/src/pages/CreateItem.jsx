@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
+import "../styles/CreatePage.css"; 
 
 export default function CreateItem() {
   const [formData, setFormData] = useState({
@@ -41,61 +42,78 @@ export default function CreateItem() {
   };
 
   return (
-    <div style={{ padding: "1rem" }}>
-      <h2>Create New Item</h2>
-      <form onSubmit={handleSubmit}>
-        <input
-          name="name"
-          placeholder="Name"
-          value={formData.name}
-          onChange={handleChange}
-          minLength={2}
-          maxLength={20}
-          required
-        /><br /><br />
+    <div className="form-container">
+      <h2 className="form-heading">Create New Item</h2>
+      <form onSubmit={handleSubmit} className="item-form">
+        <div className="form-group">
+          <label>Name</label>
+          <input
+            name="name"
+            placeholder="Enter item name"
+            value={formData.name}
+            onChange={handleChange}
+            minLength={2}
+            maxLength={20}
+            required
+          />
+        </div>
 
-        <input
-          name="description"
-          placeholder="Description"
-          value={formData.description}
-          onChange={handleChange}
-          required
-        /><br /><br />
+        <div className="form-group">
+          <label>Description</label>
+          <input
+            name="description"
+            placeholder="Enter description"
+            value={formData.description}
+            onChange={handleChange}
+            required
+          />
+        </div>
 
-        <input
-          type="number"
-          name="price"
-          placeholder="Price"
-          value={formData.price}
-          onChange={handleChange}
-          min={0}
-          step="0.01"
-        /><br /><br />
+        <div className="form-group">
+          <label>Price</label>
+          <input
+            type="number"
+            name="price"
+            placeholder="Enter price"
+            value={formData.price}
+            onChange={handleChange}
+            min={0}
+            step="0.01"
+          />
+        </div>
 
-        <input
-          type="number"
-          name="quantity"
-          placeholder="Quantity"
-          value={formData.quantity}
-          onChange={handleChange}
-          min={0}
-          required
-        /><br /><br />
+        <div className="form-group">
+          <label>Quantity</label>
+          <input
+            type="number"
+            name="quantity"
+            placeholder="Enter quantity"
+            value={formData.quantity}
+            onChange={handleChange}
+            min={0}
+            required
+          />
+        </div>
 
-        <input
-          name="category"
-          placeholder="Category"
-          value={formData.category}
-          onChange={handleChange}
-          minLength={3}
-          maxLength={15}
-          required
-        /><br /><br />
+        <div className="form-group">
+          <label>Category</label>
+          <input
+            name="category"
+            placeholder="Enter category"
+            value={formData.category}
+            onChange={handleChange}
+            minLength={3}
+            maxLength={15}
+            required
+          />
+        </div>
 
-        <button type="submit">Create Item</button>
+        <button type="submit" className="submit-button">
+          Create Item
+        </button>
       </form>
 
-      {error && <p style={{ color: "red" }}>{error}</p>}
+      {error && <p className="error-text">{error}</p>}
     </div>
   );
 }

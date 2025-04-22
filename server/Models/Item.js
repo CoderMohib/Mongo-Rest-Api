@@ -16,6 +16,13 @@ const itemSchema = new mongoose.Schema(
     price: {
       type: Number,
       min: [0, "Price Cannot be negative"],
+      required: [true, "Price is required"],
+      validate: {
+        validator: function (v) {
+          return typeof v === "number" && !isNaN(v);
+        },
+        message: "Price must be a valid number",
+      },
     },
     quantity: {
       type: Number,
